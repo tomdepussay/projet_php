@@ -1,0 +1,1 @@
+INSERT INTO status (name) VALUES ('Créateur'), ('Membre'), ('Visiteur'), ('Envoyé');

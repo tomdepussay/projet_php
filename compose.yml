@@ -1,0 +1,49 @@
+services:
+  web:
+    build: ./php
+    ports :
+     - "80:80"
+    volumes:
+     - ./app:/var/www/html/
+     - ./php/000-default.conf:/etc/apache2/sites-available/000-default.conf
+     - ./php/apache2.conf:/etc/apache2/apache2.conf
+     - ./php/php.ini:/usr/local/etc/php/php.ini
+
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./app/src/migrations:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: root
+    ports:
+      - "8080:80"
+
+  node:
+    image: node
+    working_dir: /var/www/html
+    volumes:
+      - ./app:/var/www/html
+      - /var/www/html/node_modules
+    command: >
+      sh -c "npm install && npm run watch"
+    depends_on:
+      - web
+
+volumes:
+  db_data:
