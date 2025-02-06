@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Core\Database;
 use App\Entities\Group;
+use App\Entities\User;
 
 class GroupModel {
 
@@ -18,11 +19,97 @@ class GroupModel {
     {
         $sql = "SELECT 
                     u.*,
-                    s.*
+                    s.id_status,
+                    s.name as status
                 FROM users u
                 LEFT JOIN users_groups ug ON u.id_user = ug.id_user
                 LEFT JOIN status s ON ug.id_status = s.id_status
                 WHERE ug.id_group = :id";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id' => $id]);
+        $rows = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        $users = [];
+
+        foreach($rows as $row){
+            $users[] = new User(
+                $row['id_user'],
+                $row['firstname'], 
+                $row['lastname'],
+                $row['email'],
+                $row['password'],
+                $row['id_status'],
+                $row['status']
+            );
+        }
+
+        return $users;
+    }
+
+    public function userExist(int $id_group, int $id_user): bool 
+    {
+        $sql = "SELECT * FROM users_groups WHERE id_group = :id_group AND id_user = :id_user";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id_group' => $id_group, 'id_user' => $id_user]);
+        $row = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return $row ? true : false;
+    }
+
+    public function addUser(int $id_group, int $id_user): bool 
+    {
+        $sql = "INSERT INTO users_groups (id_user, id_group, id_status) VALUES (:id_user, :id_group, 3)";
+        $query = $this->db->prepare($sql);
+        $stmt = $query->execute(['id_user' => $id_user, 'id_group' => $id_group]);
+
+        return $stmt ? true : false;
+    }
+
+    public function deleteUser(int $id_group, int $id_user): bool 
+    {
+        $sql = "DELETE FROM users_groups WHERE id_group = :id_group AND id_user = :id_user";
+        $query = $this->db->prepare($sql);
+        $stmt = $query->execute(['id_group' => $id_group, 'id_user' => $id_user]);
+        
+        return $stmt ? true : false;
+    }
+
+    public function delete(int $id_group): bool 
+    {
+        // Début de transaction
+        $this->db->beginTransaction();
+
+        
+    }
+
+    public function canAccess(int $id_group, int $id_user): bool 
+    {
+        $sql = "SELECT * FROM users_groups WHERE id_group = :id_group AND id_user = :id_user";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id_group' => $id_group, 'id_user' => $id_user]);
+        $row = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return $row ? true : false;
+    }
+
+    public function canPost(int $id_group, int $id_user): bool 
+    {
+        $sql = "SELECT * FROM users_groups WHERE id_group = :id_group AND id_user = :id_user AND id_status IN (1,2)";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id_group' => $id_group, 'id_user' => $id_user]);
+        $row = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return $row ? true : false;
+    }
+
+    public function canEdit(int $id_group, int $id_user): bool 
+    {
+        $sql = "SELECT * FROM users_groups WHERE id_group = :id_group AND id_user = :id_user AND id_status = 1";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id_group' => $id_group, 'id_user' => $id_user]);
+        $row = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return $row ? true : false;
     }
 
     public function findOneById(int $id): Group|bool 

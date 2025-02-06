@@ -34,4 +34,22 @@ class Group {
         $groupModel = new GroupModel();
         return $groupModel->findAllUsersByIdGroup($this->id_group);
     }
+
+    public function canAccess(int $id_user): bool
+    {
+        $groupModel = new GroupModel();
+        return $groupModel->canAccess($this->id_group, $id_user);
+    }
+
+    public function canPost(int $id_user): bool
+    {
+        $groupModel = new GroupModel();
+        return $groupModel->canPost($this->id_group, $id_user);
+    }
+
+    public function canEdit(int $id_user): bool
+    {
+        $groupModel = new GroupModel();
+        return $groupModel->canEdit($this->id_group, $id_user);
+    }
 }

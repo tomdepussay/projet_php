@@ -8,14 +8,18 @@ class User {
     private string $lastname;
     private string $email;
     private string $password;
+    private int $id_status;
+    private string $status;
 
-    public function __construct(int $id_user, string $firstname, string $lastname, string $email, string $password)
+    public function __construct(int $id_user, string $firstname, string $lastname, string $email, string $password, int $id_status = 0, string $status = "")
     {
         $this->id_user = $id_user;
         $this->firstname = $firstname;
         $this->lastname = $lastname;
         $this->email = $email;
         $this->password = $password;
+        $this->id_status = $id_status;
+        $this->status = $status;
     }
 
     public function getIdUser(): int
@@ -56,5 +60,15 @@ class User {
     public function getPassword(): string
     {
         return $this->password;
+    }
+
+    public function getIdStatus(): int
+    {
+        return $this->id_status;
+    }
+
+    public function getStatus(): string
+    {
+        return $this->status;
     }
 }

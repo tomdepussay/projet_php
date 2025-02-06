@@ -51,6 +51,12 @@ class Routes {
             "method" => ["GET"],
             "controller" => "GroupController",
             "function" => "show"
+        ],
+        [
+            "path" => "/groupes/{id}/gerer",
+            "method" => ["GET", "POST"],
+            "controller" => "GroupController",
+            "function" => "edit"
         ]
     ];
 }
