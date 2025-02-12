@@ -15,7 +15,7 @@
             </h1>
             <nav>
                 <ul>
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/design">Design Guide</a></li>
                     <?php if($auth->isLogged()): ?>
                         <li><a href="/groupes">Groupes</a></li>
                         <li><a href="/deconnexion">Se déconnecter</a></li>

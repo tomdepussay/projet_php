@@ -6,6 +6,7 @@ use App\Core\View;
 use App\Core\Auth;
 use App\Models\GroupModel;
 use App\Models\UserModel;
+use App\Models\PictureModel;
 
 class GroupController {
 
@@ -57,7 +58,7 @@ class GroupController {
                 $groupExist = $groupModel->findOneByName($auth->user()->getIdUser(), $name);
 
                 if($groupExist) {
-                    $error["name"] = "Le groupe existe déjà";
+                    $error["global"] = "Le groupe existe déjà";
                 } else {
                     $stmt = $groupModel->insert($auth->user()->getIdUser(), $name);
 
@@ -65,22 +66,18 @@ class GroupController {
                         header("Location: /groupes");
                         exit;
                     } else {
-                        $error["name"] = "Erreur lors de la création du groupe";
+                        $error["global"] = "Erreur lors de la création du groupe";
                     }
                 }
-
-            }
-
-            if(empty($error)) {
-                // Insertion en base de données
             }
         }
 
-
         $view = new View("group/create");
+        $view->addData("error", $error);
+        $view->addData("name", $name);
     }
 
-    public function show(int $id): void 
+    public function show(int $id_group): void 
     {   
         $auth = new Auth();
 
@@ -90,7 +87,7 @@ class GroupController {
         }
 
         $groupModel = new GroupModel();
-        $group = $groupModel->findOneById($id);
+        $group = $groupModel->findOneById($id_group);
 
         if(!$group) {
             header("Location: /groupes");
@@ -104,11 +101,15 @@ class GroupController {
             exit;
         }
 
+        $pictureModel = new PictureModel();
+        $pictures = $pictureModel->findAllByIdGroup($id_group);
+
         $view = new View("group/show");
         $view->addData("group", $group);
+        $view->addData("pictures", $pictures);
     }
 
-    public function edit(int $id): void 
+    public function edit(int $id_group): void 
     {
         $auth = new Auth();
 
@@ -118,7 +119,7 @@ class GroupController {
         }
 
         $groupModel = new GroupModel();
-        $group = $groupModel->findOneById($id);
+        $group = $groupModel->findOneById($id_group);
 
         if(!$group) {
             header("Location: /groupes");
@@ -159,17 +160,17 @@ class GroupController {
                 if(!$user) {
                     $error["email"] = "L'utilisateur n'existe pas";
                 } else {
-                    $userExist = $groupModel->userExist($id, $user->getIdUser());
+                    $userExist = $groupModel->userExist($id_group, $user->getIdUser());
                     if($userExist) {
                         $error["email"] = "L'utilisateur est déjà dans le groupe";
                     }
                 }
 
                 if(empty($error)) {
-                    $stmt = $groupModel->addUser($id, $user->getIdUser());
+                    $stmt = $groupModel->addUser($id_group, $user->getIdUser());
                     
                     if($stmt) {
-                        header("Location: /groupes/$id/gerer");
+                        header("Location: /groupes/$id_group/gerer");
                         exit;
                     } else {
                         $error["email"] = "Erreur lors de l'ajout de l'utilisateur";
@@ -180,24 +181,24 @@ class GroupController {
 
         if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["deleteUser"])) {
             $id_user = $_POST["deleteUser"];
-            $userExist = $groupModel->userExist($id, $id_user);
+            $userExist = $groupModel->userExist($id_group, $id_user);
 
             if(!$userExist) {
-                header("Location: /groupes/$id/gerer");
+                header("Location: /groupes/$id_group/gerer");
                 exit;
             }
 
-            $userCanEdit = $groupModel->canEdit($id, $id_user);
+            $userCanEdit = $groupModel->canEdit($id_group, $id_user);
 
             if($userCanEdit) {
-                header("Location: /groupes/$id/gerer");
+                header("Location: /groupes/$id_group/gerer");
                 exit;
             }
 
-            $stmt = $groupModel->deleteUser($id, $id_user);
+            $stmt = $groupModel->deleteUser($id_group, $id_user);
 
             if($stmt) {
-                header("Location: /groupes/$id/gerer");
+                header("Location: /groupes/$id_group/gerer");
                 exit;
             } else {
                 $error["delete"] = "Erreur lors de la suppression de l'utilisateur";
@@ -205,13 +206,51 @@ class GroupController {
         }
 
         if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["deleteGroup"])) {
-            $stmt = $groupModel->delete($id);
+            $stmt = $groupModel->delete($id_group);
 
             if($stmt) {
                 header("Location: /groupes");
                 exit;
             } else {
                 $error["delete"] = "Erreur lors de la suppression du groupe";
+            }
+        }
+
+        if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["promoteUser"])){
+            $id_user = $_POST["promoteUser"];
+            $userExist = $groupModel->userExist($id_group, $id_user);
+
+            if(!$userExist) {
+                header("Location: /groupes/$id_group/gerer");
+                exit;
+            }
+
+            $stmt = $groupModel->promoteUser($id_group, $id_user);
+
+            if($stmt) {
+                header("Location: /groupes/$id_group/gerer");
+                exit;
+            } else {
+                $error["promote"] = "Erreur lors de la promotion de l'utilisateur";
+            }
+        }
+
+        if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["demoteUser"])){
+            $id_user = $_POST["demoteUser"];
+            $userExist = $groupModel->userExist($id_group, $id_user);
+
+            if(!$userExist) {
+                header("Location: /groupes/$id_group/gerer");
+                exit;
+            }
+
+            $stmt = $groupModel->demoteUser($id_group, $id_user);
+
+            if($stmt) {
+                header("Location: /groupes/$id_group/gerer");
+                exit;
+            } else {
+                $error["demote"] = "Erreur lors de la rétrogradation de l'utilisateur";
             }
         }
 

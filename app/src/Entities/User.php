@@ -2,6 +2,8 @@
 
 namespace App\Entities;
 
+use App\Models\UserModel;
+
 class User {
     private int $id_user;
     private string $firstname;
@@ -70,5 +72,11 @@ class User {
     public function getStatus(): string
     {
         return $this->status;
+    }
+
+    public function pictureIsLike(int $id_picture): bool
+    {
+        $userModel = new UserModel();
+        return $userModel->pictureIsLike($this->id_user, $id_picture);
     }
 }

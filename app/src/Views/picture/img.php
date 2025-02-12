@@ -1,0 +1,1 @@
+<img src="<?= $picture->getLink() ?>" alt="<?= $picture->getDescription() ?>" width="100px" height="100px" />

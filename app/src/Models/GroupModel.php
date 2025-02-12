@@ -67,19 +67,69 @@ class GroupModel {
 
     public function deleteUser(int $id_group, int $id_user): bool 
     {
+        $pictureModel = new PictureModel();
+        $this->db->beginTransaction();
+
+        $sql = "SELECT id_picture FROM pictures WHERE id_user = :id_user AND id_group = :id_group";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id_user' => $id_user, 'id_group' => $id_group]);
+        $rows = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach($rows as $row){
+            $stmt = $pictureModel->delete($row['id_picture']);
+            if(!$stmt) {
+                $this->db->rollBack();
+                return false;
+            }
+        }
+
         $sql = "DELETE FROM users_groups WHERE id_group = :id_group AND id_user = :id_user";
         $query = $this->db->prepare($sql);
         $stmt = $query->execute(['id_group' => $id_group, 'id_user' => $id_user]);
         
-        return $stmt ? true : false;
+        if($stmt) {
+            $this->db->commit();
+            return true;
+        } else {
+            $this->db->rollBack();
+            return false;
+        }
     }
 
     public function delete(int $id_group): bool 
     {
-        // Début de transaction
+        $pictureModel = new PictureModel();
         $this->db->beginTransaction();
 
+        $sql = "SELECT id_picture FROM pictures WHERE id_group = :id_group";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id_group' => $id_group]);
+        $rows = $query->fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach($rows as $row){
+            $stmt = $pictureModel->delete($row['id_picture']);
+            if(!$stmt) {
+                $this->db->rollBack();
+                return false;
+            }
+        }
+
+        $sql = "DELETE FROM users_groups WHERE id_group = :id_group";
+        $query = $this->db->prepare($sql);
+        $stmt = $query->execute(['id_group' => $id_group]);
         
+        $sql = "DELETE FROM groups WHERE id_group = :id_group";
+        $query = $this->db->prepare($sql);
+        $stmt = $query->execute(['id_group' => $id_group]);
+
+        if($stmt) {
+            $this->db->commit();
+            return true;
+        } else {
+            $this->db->rollBack();
+            return false;
+        }
+
     }
 
     public function canAccess(int $id_group, int $id_user): bool 
@@ -110,6 +160,24 @@ class GroupModel {
         $row = $query->fetch(\PDO::FETCH_ASSOC);
 
         return $row ? true : false;
+    }
+
+    public function promoteUser(int $id_group, int $id_user): bool 
+    {
+        $sql = "UPDATE users_groups SET id_status = 2 WHERE id_group = :id_group AND id_user = :id_user";
+        $query = $this->db->prepare($sql);
+        $stmt = $query->execute(['id_group' => $id_group, 'id_user' => $id_user]);
+
+        return $stmt ? true : false;
+    }
+
+    public function demoteUser(int $id_group, int $id_user): bool 
+    {
+        $sql = "UPDATE users_groups SET id_status = 3 WHERE id_group = :id_group AND id_user = :id_user";
+        $query = $this->db->prepare($sql);
+        $stmt = $query->execute(['id_group' => $id_group, 'id_user' => $id_user]);
+
+        return $stmt ? true : false;
     }
 
     public function findOneById(int $id): Group|bool 

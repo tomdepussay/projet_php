@@ -14,6 +14,34 @@ class UserModel {
         $this->db = new Database();
     }
 
+    public function findOneById(int $id_user): User|bool 
+    {
+        $sql = "SELECT * FROM users WHERE id_user = :id_user";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id_user' => $id_user]);
+        $user = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if($user) {
+            return $this->parseUser($user);
+        } else {
+            return false;
+        }
+    }
+
+    public function pictureIsLike(int $id_user, int $id_picture): bool
+    {
+        $sql = "SELECT * FROM likes WHERE id_user = :id_user AND id_picture = :id_picture";
+        $query = $this->db->prepare($sql);
+        $query->execute(['id_user' => $id_user, 'id_picture' => $id_picture]);
+        $like = $query->fetch(\PDO::FETCH_ASSOC);
+
+        if($like) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function findByEmail(string $email): User|bool
     {
         $query = $this->db->prepare('SELECT * FROM users WHERE email = :email');

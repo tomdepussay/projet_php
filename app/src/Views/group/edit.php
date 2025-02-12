@@ -1,3 +1,5 @@
+<a href="/groupes/<?= $group->getIdGroup() ?>">Retour</a>
+
 <h2><?= $group->getName() ?></h2>
 
 <h3>Gérer le groupe</h3>
@@ -21,6 +23,15 @@
                         <?= $user->getStatus() ?>
                     </td>
                     <td>
+                        <?php if($user->getIdStatus() == 3): ?>
+                            <button type="submit" name="promoteUser" value="<?= $user->getIdUser() ?>">
+                                Promouvoir
+                            </button>
+                        <?php elseif($user->getIdStatus() == 2): ?>
+                            <button type="submit" name="demoteUser" value="<?= $user->getIdUser() ?>">
+                                Rétrograder
+                            </button>
+                        <?php endif; ?>
                         <?php if($user->getIdStatus() != 1): ?>
                             <button type="submit" name="deleteUser" value="<?= $user->getIdUser() ?>">
                                 Supprimer
