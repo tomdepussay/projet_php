@@ -1,0 +1,13 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+@use "../partials/fonts" as fonts;
+
+@layer components {
+  .subtitle {
+    font-weight: 400;
+    font-size: f.rem(20);
+    @media (width >= f.screen(md)) {
+      font-size: f.rem(24);
+    }
+  }
+}

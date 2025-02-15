@@ -1,0 +1,18 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+@use "../partials/fonts" as fonts;
+
+@layer components {
+  .menulink {
+    @include m.resetA;
+    @include m.flexbox($align: center, $gap: f.rem(12));
+    width: fit-content;
+    font-size: f.rem(0);
+    @media (width >= f.screen(md)) {
+      font-size: f.rem(16);
+    }
+    &-image {
+      width: f.rem(32);
+    }
+  }
+}

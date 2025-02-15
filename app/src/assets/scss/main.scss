@@ -7,3 +7,17 @@
 /**
 Components
 */
+@use "components/button";
+@use "components/input";
+@use "components/label";
+@use "components/textarea";
+@use "components/checkbox";
+@use "components/menulink";
+@use "components/title";
+@use "components/subtitle";
+@use "components/headline";
+@use "components/subheadline";
+/**
+Pages
+*/
+@use "pages/design-guide.scss";

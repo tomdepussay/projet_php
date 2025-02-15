@@ -1,0 +1,19 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+  .label {
+    font-size: f.rem(12);
+    &--input-error {
+      color: var(--error-600);
+      margin-top: 0.5rem;
+    }
+    &--input-desc {
+      display: inline-block;
+      line-height: f.rem(16);
+    }
+    @media (width >= f.screen(md)) {
+      font-size: f.rem(14);
+    }
+  }
+}

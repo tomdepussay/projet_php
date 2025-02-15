@@ -1,0 +1,33 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+  .checkbox-label {
+    @include m.flexbox($align: center, $gap: f.rem(8));
+  }
+  .checkbox {
+    @include m.resetCheckbox;
+    display: inline-block;
+    width: f.rem(16);
+    height: f.rem(16);
+    border: solid 0.1rem var(--white);
+    border-radius: f.rem(2);
+    cursor: pointer;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 75%;
+      height: 75%;
+      background-color: var(--green-400);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: opacity 0.2s ease-in-out;
+      opacity: 0;
+    }
+    &:checked::after {
+      opacity: 1;
+    }
+  }
+}
