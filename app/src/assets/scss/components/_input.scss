@@ -1,0 +1,45 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+  .input-label {
+    display: flex;
+    flex-direction: column;
+    @include m.flexbox($direction: column);
+    &--button {
+      @include m.flexbox($direction: row, $gap: f.rem(8));
+      & button {
+        @include m.resetButton;
+        width: f.rem(38);
+        height: f.rem(38);
+        border-radius: f.rem(8);
+        background-color: var(--green-400);
+        padding: f.rem(10);
+        @media (width >= f.screen(md)) {
+          width: f.rem(42);
+          height: f.rem(42);
+          padding: f.rem(8);
+        }
+        & img {
+          width: f.rem(18);
+          align-self: center;
+          @media (width >= f.screen(md)) {
+            width: f.rem(24);
+          }
+        }
+      }
+    }
+  }
+  .input {
+    @include m.resetInput;
+    display: inline-block;
+    padding: f.rem(9) f.rem(14) f.rem(9) f.rem(14);
+    background-color: var(--green-950);
+    border: solid 0.1rem var(--teal-blue-500);
+    border-radius: f.rem(8);
+    color: var(--white);
+    @media (width >= f.screen(md)) {
+      padding: f.rem(11) f.rem(14) f.rem(11) f.rem(14);
+    }
+  }
+}

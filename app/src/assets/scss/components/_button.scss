@@ -1,0 +1,70 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+  .button {
+    @include m.resetA;
+    @include m.resetButton;
+    display: inline-block;
+    border-radius: f.rem(8);
+    color: var(--white);
+    font-size: f.rem(14);
+    transition: background-color 0.3s;
+
+    &--primary {
+      background-color: var(--green-400);
+      padding: f.rem(12) f.rem(100);
+      &:hover {
+        background-color: var(--green-500);
+      }
+    }
+    &span {
+      margin: auto;
+      vertical-align: middle;
+    }
+    &--sm {
+      padding: f.rem(8) f.rem(24);
+      &-teal {
+        background-color: var(--teal-blue-500);
+        &:hover {
+          background-color: var(--teal-blue-600);
+        }
+      }
+      &-dark-blue {
+        background-color: var(--dark-blue-800);
+        &:hover {
+          background-color: var(--dark-blue-900);
+        }
+      }
+    }
+    &--icon {
+      padding: f.rem(16) f.rem(28) f.rem(16) f.rem(12);
+      &-image {
+        vertical-align: middle;
+        width: f.rem(18);
+        margin-right: f.rem(6);
+      }
+      &-green {
+        background-color: var(--green-400);
+        &:hover {
+          background-color: var(--green-500);
+        }
+      }
+      &-dark-blue {
+        background-color: var(--dark-blue-800);
+        &:hover {
+          background-color: var(--dark-blue-900);
+        }
+      }
+      &-red {
+        background-color: var(--error-600);
+        &:hover {
+          background-color: var(--error-700);
+        }
+      }
+      @media (width >= f.screen(md)) {
+        padding: f.rem(18) f.rem(32) f.rem(18) f.rem(14);
+      }
+    }
+  }
+}

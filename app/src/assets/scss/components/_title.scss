@@ -1,0 +1,15 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+@use "../partials/fonts" as fonts;
+
+@layer components {
+  .title {
+    color: var(--green-400);
+    font-family: fonts.$title;
+    font-size: f.rem(32);
+    font-weight: bold;
+    @media (width >= f.screen(md)) {
+      font-size: f.rem(38);
+    }
+  }
+}

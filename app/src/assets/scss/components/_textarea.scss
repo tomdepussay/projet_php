@@ -1,0 +1,14 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+  .textarea {
+    display: inline-block;
+    background: none;
+    resize: none;
+    padding: f.rem(11) f.rem(14) f.rem(11) f.rem(14);
+    border: solid 0.1rem var(--teal-blue-500);
+    border-radius: f.rem(8);
+    color: var(--white);
+  }
+}

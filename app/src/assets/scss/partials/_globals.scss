@@ -5,6 +5,8 @@
 
 @layer base {
 	:root {
+		--body-bg-color: #171717;
+		--text-color: white;
 		@each $name, $color in v.$colors {
 			@if ($name == "black" or $name == "white") {
 				--#{$name}: #{color.scale($color, $space: hsl)};
@@ -28,7 +30,7 @@
 	}
 
 	body {
-		font-family: fonts.$font1;
+		font-family: fonts.$text;
 		color: var(--text-color);
 		background-color: var(--body-bg-color);
 	}
