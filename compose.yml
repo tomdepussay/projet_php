@@ -1,14 +1,42 @@
 services:
+  traefik:
+    image: traefik
+    container_name: traefik
+    restart: always
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=depussay.tom1@gmail.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+    networks:
+      - web
   web:
     build: ./php
-    ports :
-     - "80:80"
+    container_name: web
+    restart: always
     volumes:
      - ./app:/var/www/html/
      - ./php/000-default.conf:/etc/apache2/sites-available/000-default.conf
      - ./php/apache2.conf:/etc/apache2/apache2.conf
      - ./php/php.ini:/usr/local/etc/php/php.ini
     command: bash -c "chown -R www-data:www-data /var/www/html/public/uploads && apache2-foreground"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`zoomade.fr`)"
+      - "traefik.http.routers.web.entrypoints=websecure"
+      - "traefik.http.routers.web.tls.certresolver=myresolver"
+    networks:
+      - web
 
 
   mariadb:
@@ -24,6 +52,9 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       - ./app/src/migrations:/docker-entrypoint-initdb.d
+    networks:
+      - web
+
 
   phpmyadmin:
     image: phpmyadmin
@@ -33,6 +64,11 @@ services:
       PMA_HOST: mariadb
       PMA_USER: root
       PMA_PASSWORD: root
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`pma.zoomade.fr`)"
+      - "traefik.http.routers.phpmyadmin.entrypoints=websecure"
+      - "traefik.http.routers.phpmyadmin.tls.certresolver=myresolver"
     ports:
       - "8080:80"
 
@@ -46,6 +82,12 @@ services:
       sh -c "npm install && npm run watch"
     depends_on:
       - web
+    networks:
+      - web
 
 volumes:
   db_data:
+
+networks:
+  web:
+    driver: bridge
