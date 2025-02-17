@@ -17,7 +17,13 @@ Components
 @use "components/subtitle";
 @use "components/headline";
 @use "components/subheadline";
+
 /**
 Pages
 */
 @use "pages/design-guide.scss";
+
+@use "pages/index.scss";
+@use "pages/login.scss";
+@use "pages/register.scss";
+@use "pages/forgot-password.scss";

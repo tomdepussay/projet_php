@@ -1,49 +1,42 @@
-<form action="/inscription" method="POST">
-    <h2>S'inscrire</h2>
-
-    <div>
-        <div>
-            <label for="firstname">Prénom</label>
-            <input type="text" name="firstname" id="firstname" value="<?= $credentials["firstname"] ?>" required>
-            <?php if(isset($error["firstname"])): ?>
-                <p><?= $error["firstname"] ?></p>
-            <?php endif; ?>
+<section class="register register--content">
+    <h2 class="title">Inscription</h2>
+    <p class="description">C'est le début de l'aventure</p>
+    <form action="/inscription" method="POST" class="register register--form">
+        <div class="input-label">
+            <input class="input" name="lastname" placeholder="Nom" type="text" />
+            <label class="label label--input-error" for="lastname">
+                <?php if(isset($error["lastname"])): ?><?= $error["lastname"] ?><?php endif; ?>
+            </label>
         </div>
-        <div>
-            <label for="lastname">Nom</label>
-            <input type="text" name="lastname" id="lastname" value="<?= $credentials["lastname"] ?>" required>
-            <?php if(isset($error["lastname"])): ?>
-                <p><?= $error["lastname"] ?></p>
-            <?php endif; ?>
+        <div class="input-label">
+            <input class="input" name="firstname" placeholder="Prénom" type="text" />
+            <label class="label label--input-error" for="firstname">
+                <?php if(isset($error["firstname"])): ?><?= $error["firstname"] ?><?php endif; ?>
+            </label>
         </div>
-    </div>
-    <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" value="<?= $credentials["email"] ?>" required>
-        <?php if(isset($error["email"])): ?>
-            <p><?= $error["email"] ?></p>
-        <?php endif; ?>
-    </div>
-    <div>
-        <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password" required>
-        <?php if(isset($error["password"])): ?>
-            <p><?= $error["password"] ?></p>
-        <?php endif; ?>
-    </div>
-    <div>
-        <label for="passwordConfirm">Confirmer le mot de passe</label>
-        <input type="password" name="passwordConfirm" id="passwordConfirm" required>
-        <?php if(isset($error["passwordConfirm"])): ?>
-            <p><?= $error["passwordConfirm"] ?></p>
-        <?php endif; ?>
-    </div>
-
-    <?php if(isset($error["global"])): ?>
+        <div class="input-label">
+            <input class="input" name="email" placeholder="Adresse mail" type="email" />
+            <label class="label label--input-error" for="email">
+                <?php if(isset($error["email"])): ?><?= $error["email"] ?><?php endif; ?>
+            </label>
+        </div>
+        <div class="input-label">
+            <input class="input" name="password" placeholder="Mot de passe" type="password" />
+            <label class="label label--input-error" for="password">
+                <?php if(isset($error["password"])): ?><?= $error["password"] ?><?php endif; ?>
+            </label>
+        </div>
+        <div class="input-label">
+            <input class="input" name="passwordConfirm" placeholder="Confirmer le mot de passe" type="password" />
+            <label class="label label--input-error" for="passwordConfirm">
+                <?php if(isset($error["passwordConfirm"])): ?><?= $error["passwordConfirm"] ?><?php endif; ?>
+            </label>
+        </div>
+        <?php if(isset($error["global"])): ?>
         <p><?= $error["global"] ?></p>
-    <?php endif; ?>
+        <?php endif; ?>
 
-    <input type="submit" value="S'inscrire" name="submit">
-
-    <a href="/connexion">Se connecter</a>
-</form>
+        <button type="submit" value="S'inscrire" name="submit" class="button button--primary">S'inscrire</button>
+    </form>
+    <p class="signin">Déjà inscrit ? <a href="/connexion">Se connecter</a></p>
+</section>
