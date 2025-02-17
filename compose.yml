@@ -8,6 +8,8 @@ services:
      - ./php/000-default.conf:/etc/apache2/sites-available/000-default.conf
      - ./php/apache2.conf:/etc/apache2/apache2.conf
      - ./php/php.ini:/usr/local/etc/php/php.ini
+    command: bash -c "chown -R www-data:www-data /var/www/html/public/uploads && apache2-foreground"
+
 
   mariadb:
     image: mariadb
