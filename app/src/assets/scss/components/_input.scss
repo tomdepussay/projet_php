@@ -3,8 +3,6 @@
 
 @layer components {
   .input-label {
-    display: flex;
-    flex-direction: column;
     @include m.flexbox($direction: column);
     &--button {
       @include m.flexbox($direction: row, $gap: f.rem(8));

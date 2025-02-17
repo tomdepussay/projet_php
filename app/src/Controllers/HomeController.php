@@ -14,8 +14,8 @@ class HomeController {
         $auth = new Auth();
 
         if(!$auth->isLogged()) {
-            $view = new View('home/index');
-            exit;
+            header('Location: /connexion');
+            exit();
         }
 
         $pictureModel = new PictureModel();
