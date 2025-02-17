@@ -18,3 +18,8 @@ RUN pecl install yamL
 RUN usermod -u 1000 www-data
 
 RUN a2enmod rewrite
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["apache2-foreground"]
