@@ -42,6 +42,11 @@ class PictureModel {
             return false;
         }
 
+        // On crée le dossier /pictures dans /public/uploads s'il n'existe pas
+        if(!is_dir(__DIR__ . "/../../public/uploads/pictures")) {
+            mkdir(__DIR__ . "/../../public/uploads/pictures");
+        }
+
         // Le nom du fichier est l'url + l'extension
         $filename = $url . "." . pathinfo($picture["name"], PATHINFO_EXTENSION);
 
