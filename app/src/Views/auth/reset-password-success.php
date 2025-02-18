@@ -1,0 +1,1 @@
+<h2>Changement de mot de passe effectué !</h2>

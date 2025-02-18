@@ -70,6 +70,18 @@ class UserModel {
         return $stmt;
     }
 
+    public function updatePassword(int $id_user, string $password): bool
+    {
+        $sql = "UPDATE users SET password = :password WHERE id_user = :id_user";
+        $query = $this->db->prepare($sql);
+        $stmt = $query->execute([
+            'password' => $password,
+            'id_user' => $id_user
+        ]);
+
+        return $stmt;
+    }
+
     private function parseUsers(array $rows): array
     {
         $users = [];

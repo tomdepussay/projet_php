@@ -1,7 +1,7 @@
 <section class="forgotpswrd forgotpswrd--content">
     <h2 class="title">Zoomade</h2>
     <p class="description">Toutes vos photos, partout, tout le temps</p>
-    <form action="/mot-de-passe-oublie" method="POST" class="forgotpswrd forgotpswrd--form">
+    <form action="/recuperation" method="POST" class="forgotpswrd forgotpswrd--form">
 
         <div class="input-label">
             <input class="input" name="email" placeholder="Adresse mail" type="email" value="<?= $email ?>" />
