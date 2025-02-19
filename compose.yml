@@ -68,8 +68,6 @@ services:
     environment:
       PMA_ARBITRARY: 1
       PMA_HOST: mariadb
-      PMA_USER: root
-      PMA_PASSWORD: root
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.phpmyadmin.rule=Host(`pma.zoomade.local`)"
