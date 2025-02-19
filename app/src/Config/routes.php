@@ -29,7 +29,7 @@ class Routes {
             "function" => "logout"
         ],
         [
-            "path" => "/mot-de-passe-oublie",
+            "path" => "/recuperation",
             "method" => ["GET", "POST"],
             "controller" => "AuthController",
             "function" => "forgotPassword"

@@ -28,15 +28,11 @@ class App {
      * Charger les variables d'environnement à partir de src/.env.
      */
     private function loadEnv() {
-        $envFile = __DIR__ . '/../.env';
-        if (file_exists($envFile)) {
-            $lines = file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-            foreach ($lines as $line) {
-                if (strpos($line, '=') !== false) {
-                    [$key, $value] = explode('=', $line, 2);
-                    $_ENV[$key] = trim($value);
-                }
-            }
+        
+        $env = getenv();
+
+        foreach($env as $key => $value) {
+            $_ENV[$key] = $value;
         }
     }
 }

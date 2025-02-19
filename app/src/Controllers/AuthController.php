@@ -182,6 +182,59 @@ class AuthController {
 
         $email = isset($_POST["email"]) ? $_POST["email"] : "";
 
+        if(isset($_REQUEST["token"])){
+
+            $token = trim($_REQUEST["token"]);
+
+            $passwordResetModel = new PasswordResetModel();
+            $passwordReset = $passwordResetModel->findOneByToken($token);
+
+            if(!$passwordReset){
+                $error["global"] = "Le token est invalide";
+            } else {
+                $expires_at = new \DateTime($passwordReset["expires_at"]);
+                $now = new \DateTime();
+
+                if($expires_at < $now){
+                    $error["global"] = "Le token a expiré";
+                } else {
+                    if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
+                        
+                        $password = $_POST["password"];
+                        $passwordConfirm = $_POST["passwordConfirm"];
+
+                        if(empty($password)){
+                            $error["global"] = "Le mot de passe est obligatoire";
+                        }
+
+                        if(empty($passwordConfirm)){
+                            $error["global"] = "La confirmation du mot de passe est obligatoire";
+                        } else {
+                            if($password != $passwordConfirm){
+                                $error["global"] = "Les mots de passe ne correspondent pas";
+                            }
+                        }
+
+                        if(empty($error)){
+
+                            $password = password_hash($password, PASSWORD_DEFAULT);
+                            $userModel = new UserModel();
+                            $userModel->updatePassword($passwordReset["id_user"], $password);
+
+                            $passwordResetModel->deleteToken($passwordReset["id_password_reset"]);
+
+                            $view = new View('auth/reset-password-success');
+                            exit();
+                        }
+                    }
+                }
+            }
+            $view = new View('auth/reset-password');
+            $view->addData('error', $error);
+            $view->addData('token', $token);
+            exit();
+        }
+        
         if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["submit"])){
 
             $email = strtolower(trim($_POST["email"]));
@@ -197,15 +250,12 @@ class AuthController {
 
                 if($user){
                     $token = bin2hex(random_bytes(32));
-                    
-                    $passwordResetModel = new PasswordResetModel();
-                    $passwordResetModel->addToken($user->getIdUser(), $token);
 
-                    $link = "http://localhost:8000/reset-password?token=$token";
+                    $link = "https://zoomade.fr/recuperation?token=$token";
 
                     // Données du mail
                     $data = [
-                        "from" => "ne-pas-repondre@tomdepussay.fr",
+                        "from" => "Zoomade Support <recuperation@zoomade.fr>",
                         "to" => [$user->getEmail()],
                         "subject" => "Réinitialisation de votre mot de passe",
                         "html" => "<h1>Bonjour !</h1><p>Pour réinitialiser votre mot de passe cliquez sur ce lien : <a href='" . $link . "' target='_blank'>" . $link . "</a></p>"
@@ -227,16 +277,19 @@ class AuthController {
                     
                     // Exécuter la requête
                     $response = curl_exec($ch);
-                    
-                    // Vérifier s'il y a des erreurs
-                    if (curl_errno($ch)) {
-                        echo 'Erreur cURL : ' . curl_error($ch);
-                    } else {
-                        echo 'Réponse : ' . $response;
-                    }
-                    
+
                     // Fermer la connexion cURL
                     curl_close($ch);
+
+                    if($response){
+                        $passwordResetModel = new PasswordResetModel();
+                        $passwordResetModel->addToken($user->getIdUser(), $token);
+
+                        $view = new View('auth/forgot-password-success');
+                        exit();
+                    } else {
+                        $error["global"] = "Une erreur est survenue lors de l'envoi du mail";
+                    }
 
                 } else {
                     $error["global"] = "Cet utilisateur n'existe pas";

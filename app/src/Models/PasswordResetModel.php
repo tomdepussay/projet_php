@@ -29,4 +29,29 @@ class PasswordResetModel {
 
         return $stmt;
     }
+
+    public function findOneByToken(string $token): array|bool
+    {
+        $sql = "SELECT * FROM password_resets WHERE token = :token";
+
+        $query = $this->db->prepare($sql);
+        $query->execute([
+            'token' => $token
+        ]);
+        $passwordReset = $query->fetch(\PDO::FETCH_ASSOC);
+
+        return $passwordReset;
+    }
+
+    public function deleteToken(int $id_password_reset): bool 
+    {
+        $sql = "DELETE FROM password_resets WHERE id_password_reset = :id_password_reset";
+
+        $query = $this->db->prepare($sql);
+        $stmt = $query->execute([
+            'id_password_reset' => $id_password_reset
+        ]);
+
+        return $stmt;
+    }
 }
