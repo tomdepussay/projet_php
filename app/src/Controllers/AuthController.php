@@ -255,7 +255,7 @@ class AuthController {
 
                     // Données du mail
                     $data = [
-                        "from" => "recuperation@zoomade.fr",
+                        "from" => "Zoomade Support <recuperation@zoomade.fr>",
                         "to" => [$user->getEmail()],
                         "subject" => "Réinitialisation de votre mot de passe",
                         "html" => "<h1>Bonjour !</h1><p>Pour réinitialiser votre mot de passe cliquez sur ce lien : <a href='" . $link . "' target='_blank'>" . $link . "</a></p>"
@@ -278,8 +278,6 @@ class AuthController {
                     // Exécuter la requête
                     $response = curl_exec($ch);
 
-                    echo $response;
-                    
                     // Fermer la connexion cURL
                     curl_close($ch);
 

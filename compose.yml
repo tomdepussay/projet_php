@@ -30,6 +30,12 @@ services:
      - ./php/apache2.conf:/etc/apache2/apache2.conf
      - ./php/php.ini:/usr/local/etc/php/php.ini
     command: bash -c "chown -R www-data:www-data /var/www/html/public/uploads && apache2-foreground"
+    environment:
+      - DB_HOST=mariadb
+      - DB_DATABASE=zoomade
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - RESEND_KEY=YOUR_RESEND_KEY
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.web.rule=Host(`zoomade.local`)"
@@ -44,7 +50,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: db
+      MYSQL_DATABASE: zoomade
       MYSQL_USER: user
       MYSQL_PASSWORD: root
     ports:
