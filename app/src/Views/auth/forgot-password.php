@@ -12,7 +12,8 @@
         <?php if(isset($error["global"])): ?>
         <p class="error"><?= $error["global"] ?></p>
         <?php endif; ?>
-        <button type="submit" value="Envoyer" class="button button--primary">Réinitialiser le mot de passe</button>
+        <button type="submit" value="Envoyer" name="submit" class="button button--primary">Réinitialiser le mot de
+            passe</button>
     </form>
     <p class="signin"><a href="/connexion">Retour</a></p>
 </section>

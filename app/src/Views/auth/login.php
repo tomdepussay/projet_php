@@ -9,6 +9,6 @@
         <?php endif; ?>
         <button type="submit" value="Se connecter" name="submit" class="button button--primary">Se connecter</button>
     </form>
-    <a class="forgot" href="/mot-de-passe-oublie">Mot de passe oublié ?</a>
+    <a class="forgot" href="/recuperation">Mot de passe oublié ?</a>
     <p class="signin">Vous êtes nouveaux ? <a href="/inscription">S'inscrire</a></p>
 </section>
