@@ -6,11 +6,9 @@
         <input type="password" name="password" id="password" placeholder="Mot de passe" required class="input">
         <?php if(isset($error["global"])): ?>
         <p><?= $error["global"] ?></p>
-    <?php endif; ?>
-
-    <input type="submit" value="Se connecter" name="submit">
-
-    <a href="/inscription">S'inscrire</a>
-
-    <a href="/recuperation">Mot de passe oublié ?</a>
-</form>
+        <?php endif; ?>
+        <button type="submit" value="Se connecter" name="submit" class="button button--primary">Se connecter</button>
+    </form>
+    <a class="forgot" href="/recuperation">Mot de passe oublié ?</a>
+    <p class="signin">Vous êtes nouveaux ? <a href="/inscription">S'inscrire</a></p>
+</section>
