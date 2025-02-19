@@ -1,37 +1,59 @@
 @use "fonts";
 @use "variables" as v;
 @use "functions" as f;
+@use "mixins" as m;
 @use "sass:color";
 
 @layer base {
-	:root {
-		--body-bg-color: #171717;
-		--text-color: white;
-		@each $name, $color in v.$colors {
-			@if ($name == "black" or $name == "white") {
-				--#{$name}: #{color.scale($color, $space: hsl)};
-			} @else {
-				$baseLightness: color.channel($color, "lightness", $space: hsl);
-				$baseHue: color.channel($color, "hue", $space: hsl);
-				$baseSaturation: color.channel($color, "saturation", $space: hsl);
-				@each $shade, $percent in v.$shades {
-					$val: hsl($baseHue $baseSaturation $percent);
-					@if (
-						$percent <= $baseLightness and ($percent + 8%) >= $baseLightness
-					) {
-						$val: hsl(
-							$baseHue $baseSaturation $baseLightness
-						);
-					}
-					--#{$name}-#{$shade}: #{color.scale($val, $space: hsl)};
-				}
-			}
-		}
-	}
+  :root {
+    --body-bg-color: #171717;
+    --text-color: white;
+    @each $name, $color in v.$colors {
+      @if ($name == "black" or $name == "white") {
+        --#{$name}: #{color.scale($color, $space: hsl)};
+      } @else {
+        $baseLightness: color.channel($color, "lightness", $space: hsl);
+        $baseHue: color.channel($color, "hue", $space: hsl);
+        $baseSaturation: color.channel($color, "saturation", $space: hsl);
+        @each $shade, $percent in v.$shades {
+          $val: hsl($baseHue $baseSaturation $percent);
+          @if (
+            $percent <= $baseLightness and ($percent + 8%) >= $baseLightness
+          ) {
+            $val: hsl($baseHue $baseSaturation $baseLightness);
+          }
+          --#{$name}-#{$shade}: #{color.scale($val, $space: hsl)};
+        }
+      }
+    }
+  }
 
-	body {
-		font-family: fonts.$text;
-		color: var(--text-color);
-		background-color: var(--body-bg-color);
-	}
+  html,
+  body {
+    min-height: 100% - f.rem(64);
+    min-width: 100% - f.rem(64);
+  }
+
+  body {
+    font-family: fonts.$text;
+    color: var(--text-color);
+    background-color: var(--body-bg-color);
+  }
+
+  .main--logged {
+    padding: f.rem(8);
+    @media (width >= f.screen(md)) {
+      padding: f.rem(16);
+      padding-left: f.rem(240) + f.rem(16);
+    }
+  }
+
+  // Global layout
+  .logged {
+    height: 100%;
+    @include m.flexbox($direction: column-reverse, $justify: space-between);
+    @media (width >= f.screen(md)) {
+      @include m.flexbox($direction: row, $justify: start);
+    }
+  }
 }
