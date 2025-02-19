@@ -10,29 +10,47 @@
     <meta name="description" content="<?= isset($description) ? $description : "Template" ?>">
 </head>
 
-<body>
-    <!--  <header>
-        <h1>
+<body <?php if($auth->isLogged()): ?> class="logged" <?php endif; ?> <header>
+    <!--   <h1>
             <a href="/">Site</a>
-        </h1>
-        <nav>
-            <ul>
-                <li><a href="/design">Design Guide</a></li>
-                <?php if($auth->isLogged()): ?>
-                <li><a href="/groupes">Groupes</a></li>
-                <li><a href="/deconnexion">Se déconnecter</a></li>
-                <?php else: ?>
-                <li><a href="/connexion">Se connecter</a></li>
-                <li><a href="/inscription">S'enregistrer</a></li>
-                <?php endif; ?>
+        </h1> -->
+    <?php if($auth->isLogged()): ?>
+    <header class="navigation--header">
+        <nav class="navigation">
+            <ul class="navigation--list">
+                <li><a class="navigation--title" href="/">Zoomade</a></li>
+                <li><a href="/" class="menulink">
+                        <img class="menulink-image" src="/public/medias/home.png" />
+                        Accueil
+                    </a>
+                </li>
+                <li><a href="/groupes" class="menulink">
+                        <img class="menulink-image" src="/public/medias/group.png" />
+                        Mes groupes
+                    </a></li>
+                <li><a href="/design" class="menulink">
+                        <img class="menulink-image" src="/public/medias/palette.png" />
+                        Design Guide
+                    </a></li>
+                <li><a href="/deconnexion" class="menulink">
+                        <img class="menulink-image" src="/public/medias/logout.png" />
+                        Déconnexion
+                    </a></li>
             </ul>
         </nav>
-    </header> -->
+    </header>
+    <main class="main--logged">
+        <?php include $this->v; ?>
+
+
+    </main>
+    <?php else: ?>
     <main>
         <?php include $this->v; ?>
 
 
     </main>
+    <?php endif; ?>
 </body>
 
 </html>
