@@ -3,7 +3,7 @@
 <h1 class="title">Photo</h1>
 <h2 class="subtitle">Modifier la photo</h2>
 
-<form class="edit-photo" action="/photos/<?= $picture->getUrl() ?>/modifier" method="POST">
+<form class="edit-photo mb-4" action="/photos/<?= $picture->getUrl() ?>/modifier" method="POST">
     <textarea class="textarea" rows="5" cols="30" placeholder="Description" id="description" name="description"
         resize="none" required><?= $description ?? $picture->getDescription() ?></textarea>
     <div class="checkbox-label">
