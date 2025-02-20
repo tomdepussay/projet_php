@@ -1,26 +1,21 @@
-<a href="/photos/<?= $picture->getUrl() ?>">Retour</a>
+<a class="back" href="/photos/<?= $picture->getUrl() ?>">Retour</a>
 
-<h2>Photo</h2>
+<h1 class="title">Photo</h1>
+<h2 class="subtitle">Modifier la photo</h2>
 
-<h3>Modifier la photo</h3>
-
-<?php include("img.php"); ?>
-
-<form action="/photos/<?= $picture->getUrl() ?>/modifier" method="POST">
-
-    <div>
-        <label for="description">Description :</label>
-        <textarea id="description" name="description" required><?= $description ?? $picture->getDescription() ?></textarea>
+<form class="edit-photo" action="/photos/<?= $picture->getUrl() ?>/modifier" method="POST">
+    <textarea class="textarea" rows="5" cols="30" placeholder="Description" id="description" name="comment"
+        resize="none" required><?= $description ?? $picture->getDescription() ?></textarea>
+    <div class="checkbox-label">
+        <input type="checkbox" class="checkbox" name="public" id="public">
+        <label class="label label--input-desc" for="public">Rendre la photo publique</label>
     </div>
-
-    <div>
-        <input type="checkbox" name="public" id="public" <?= $picture->getPublicAccess() ? "checked" : "" ?>>
-        <label for="public">Rendre la photo publique</label>
-    </div>
-
-    <input type="submit" value="Modifier la photo" name="submit">
+    <input class="button button--primary button-left" type="submit" value="Modifier la photo" name="submit">
 </form>
-
 <form action="/photos/<?= $picture->getUrl() ?>/supprimer" method="POST">
-    <input type="submit" value="Supprimer la photo" name="submit">
+    <button type="submit" value="Supprimer la photo" name="submit"
+        class="button button--icon button--icon-red button-left">
+        <img src=" /public/medias/trash.png" class="button--icon-image" />
+        <span>Supprimer le groupe</span>
+    </button>
 </form>

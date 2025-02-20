@@ -1,0 +1,18 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+  .picturelist {
+    @include m.resetList;
+    width: 100%;
+    @include m.flexbox(
+      $justify: center,
+      $align: center,
+      $gap: f.rem(8),
+      $wrap: wrap
+    );
+    @media (width >= f.screen(md)) {
+      @include m.flexbox($align: start, $justify: start);
+    }
+  }
+}

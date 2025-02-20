@@ -1,0 +1,9 @@
+@use "../../partials/functions" as f;
+@use "../../partials/mixins" as m;
+
+@layer pages {
+  .groups-list {
+    @include m.resetList;
+    @include m.flexbox($direction: column, $align: center, $gap: f.rem(8));
+  }
+}

@@ -1,0 +1,15 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+  .picture {
+    &--big {
+      width: 100%;
+      height: auto;
+      border-radius: f.rem(8);
+      @media (width >= f.screen(lg)) {
+        max-width: f.rem(400);
+      }
+    }
+  }
+}

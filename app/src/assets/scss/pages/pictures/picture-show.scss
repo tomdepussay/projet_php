@@ -1,0 +1,50 @@
+@use "../../partials/functions" as f;
+@use "../../partials/mixins" as m;
+
+@layer pages {
+  .show-photo {
+    @include m.flexbox($direction: column, $gap: f.rem(8), $wrap: wrap);
+    @media (width >= f.screen(lg)) {
+      @include m.flexbox(
+        $direction: row,
+        $align: start,
+        $gap: f.rem(16),
+        $wrap: nowrap
+      );
+    }
+    &--infos {
+      box-sizing: border-box;
+      @include m.flexbox($direction: column);
+      border-radius: f.rem(8);
+      border: f.rem(1) solid var(--white);
+      padding: f.rem(8);
+      width: 100%;
+      @media (width >= f.screen(lg)) {
+        max-width: f.rem(600);
+        max-width: none;
+      }
+      &-desc {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        width: 100%;
+      }
+      &-likes {
+        @include m.flexbox($align: center, $gap: f.rem(8));
+        width: 100%;
+        @media (width >= f.screen(lg)) {
+          width: auto;
+        }
+      }
+      &-comments {
+        @include m.resetList;
+      }
+      &-actions {
+        @include m.flexbox($align: center, $gap: f.rem(8), $wrap: wrap);
+        width: 100%;
+        @media (width >= f.screen(lg)) {
+          width: auto;
+        }
+      }
+    }
+  }
+}

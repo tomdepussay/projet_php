@@ -1,62 +1,65 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
 
-.navigation {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  padding: f.rem(16);
-  height: f.rem(64);
-  background-color: var(--dark-blue-800);
-  &--header {
+@layer components {
+  .navigation {
+    position: fixed;
+    z-index: 1;
+    bottom: 0;
     width: 100%;
-  }
-  @media (width >= f.screen(md)) {
+    padding: f.rem(16);
+    height: f.rem(64);
+    background-color: var(--dark-blue-800);
     &--header {
-      width: max-content;
+      width: 100%;
     }
-  }
-  &--list {
-    height: 100%;
-    @include m.resetList;
-    @include m.flexbox(
-      $direction: row,
-      $justify: center,
-      $align: center,
-      $gap: f.rem(12)
-    );
     @media (width >= f.screen(md)) {
+      &--header {
+        width: max-content;
+      }
+    }
+    &--list {
+      height: 100%;
+      @include m.resetList;
       @include m.flexbox(
-        $direction: column,
-        $justify: start,
-        $align: start,
-        $gap: f.rem(18)
+        $direction: row,
+        $justify: center,
+        $align: center,
+        $gap: f.rem(12)
       );
-      & > li:first-child {
-        width: 100%;
+      @media (width >= f.screen(md)) {
+        @include m.flexbox(
+          $direction: column,
+          $justify: start,
+          $align: start,
+          $gap: f.rem(18)
+        );
+        & > li:first-child {
+          width: 100%;
+        }
+        & > li:last-child {
+          margin-top: auto;
+        }
       }
-      & > li:last-child {
-        margin-top: auto;
-      }
+      //first child
     }
-    //first child
-  }
-  @media (width >= f.screen(md)) {
-    width: f.rem(240);
-    height: 100%;
-  }
-  &--title {
-    width: 100%;
-    text-align: center;
-    margin-bottom: f.rem(24);
-    @include m.resetA;
-    font-size: f.rem(32);
-    font-weight: 500;
-    display: none;
-
-    color: var(--white);
     @media (width >= f.screen(md)) {
-      display: block;
+      width: f.rem(240);
+      height: 100%;
+    }
+    &--title {
+      width: 100%;
+      text-align: center;
+      margin-bottom: f.rem(24);
+      @include m.resetA;
+      font-size: f.rem(32);
+      font-weight: 500;
+      display: none;
+
+      color: var(--white);
+      @media (width >= f.screen(md)) {
+        display: block;
+      }
     }
   }
 }

@@ -1,5 +1,5 @@
 <form action="/recuperation?token=<?= $token ?>" method="POST">
-    <h2>Récupération du mot de passe</h2>
+    <h1 class="title">Récupération du mot de passe</h1>
 
     <div>
         <label for="password">Mot de passe :</label>
@@ -12,9 +12,10 @@
     </div>
 
     <?php if(isset($error["global"])): ?>
-        <p><?= $error["global"] ?></p>
+    <p class="error"><?= $error["global"] ?></p>
     <?php endif; ?>
 
     <input type="submit" value="Envoyer" name="submit">
+    <button type="submit" name="submit" class="button button--primary">Envoyer</button>
 
 </form>

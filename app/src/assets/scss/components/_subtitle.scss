@@ -6,8 +6,10 @@
   .subtitle {
     font-weight: 400;
     font-size: f.rem(20);
+    text-align: center;
     @media (width >= f.screen(md)) {
       font-size: f.rem(24);
+      text-align: left;
     }
   }
 }

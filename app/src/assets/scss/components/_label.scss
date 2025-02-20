@@ -6,7 +6,7 @@
     font-size: f.rem(12);
     &--input-error {
       color: var(--error-600);
-      margin-top: 0.5rem;
+      margin: f.rem(4) 0 f.rem(8) 0;
     }
     &--input-desc {
       display: inline-block;

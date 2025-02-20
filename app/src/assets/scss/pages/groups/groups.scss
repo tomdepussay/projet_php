@@ -1,0 +1,13 @@
+@use "../../partials/functions" as f;
+@use "../../partials/mixins" as m;
+
+@layer pages {
+  .grouplist {
+    @include m.resetList;
+    @include m.flexbox($direction: column, $align: center, $gap: f.rem(8));
+    margin: f.rem(24) 0 f.rem(38) 0;
+    @media (width >= f.screen(md)) {
+      @include m.flexbox($align: start);
+    }
+  }
+}

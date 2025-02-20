@@ -1,19 +1,17 @@
-<a href="/groupes">Retour</a>
+<a class="back" href="/groupes">Retour</a>
 
+<h1 class="title">Créer un nouveau groupe</h1>
 <form action="/groupes/creer" method="POST">
-    <h2>Créer un nouveau groupe</h2>
-
-    <div>
-        <label for="name">Nom :</label>
-        <input type="text" name="name" id="name" required value="<?= isset($name) ? $name : "" ?>">
-        <?php if(isset($error["name"])): ?>
-            <p><?= $error["name"] ?></p>
-        <?php endif; ?>
+    <div class="input-label">
+        <input class="input" name="name" placeholder="Nom du groupe" type="text" required
+            value="<?= isset($name) ? $name : "" ?>" />
+        <label class="label label--input-error" for="name"><?php if(isset($error["name"])): ?>
+            <?php endif; ?></label>
     </div>
-
     <?php if(isset($error["global"])): ?>
-        <p><?= $error["global"] ?></p>
+    <p class="error"><?= $error["global"] ?></p>
     <?php endif; ?>
 
-    <input type="submit" value="Créer le groupe" name="submit">
+    <button type="submit" name="submit" class="button button--primary">Créer
+    </button>
 </form>

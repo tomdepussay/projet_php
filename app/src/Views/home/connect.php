@@ -1,6 +1,5 @@
-<h2>Bienvenue <?= $auth->user()->getFirstname() ?> !</h2>
-
-<h3>Mes photos</h3>
+<h1 class="title">Bienvenue <?= $auth->user()->getFirstname() ?> !</h1>
+<h2 class="subtitle">Mes photos</h2>
 
 <?php if($pictures && count($pictures) > 0): ?>
 <?php foreach($pictures as $picture): ?>
@@ -9,5 +8,5 @@
 </a>
 <?php endforeach; ?>
 <?php else: ?>
-<p>Aucune photo pour le moment</p>
+<h3 class="headline">Aucune photo pour le moment</h3>
 <?php endif; ?>

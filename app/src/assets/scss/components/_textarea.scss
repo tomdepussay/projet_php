@@ -3,9 +3,8 @@
 
 @layer components {
   .textarea {
-    /* display: inline-block; */
     width: 100%;
-    box-sizing: border-box; /* Empêche le débordement si padding/border */
+    box-sizing: border-box;
     background: none;
     resize: none;
     padding: f.rem(11) f.rem(14) f.rem(11) f.rem(14);

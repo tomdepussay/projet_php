@@ -1,17 +1,14 @@
 @use "../partials/functions" as f;
 @use "../partials/mixins" as m;
-@use "../partials/fonts" as fonts;
 
 @layer components {
-  .headline {
-    font-weight: 400;
-    font-size: f.rem(16);
+  .back {
+    @include m.resetA;
+    display: block;
     text-align: center;
+    text-decoration: underline;
+    color: var(--white);
     @media (width >= f.screen(md)) {
-      font-size: f.rem(18);
-      text-align: left;
-    }
-    &-left {
       text-align: left;
     }
   }
