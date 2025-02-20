@@ -6,7 +6,9 @@
         <div class="input-label">
             <input class="input" name="email" placeholder="Adresse mail" type="email" value="<?= $email ?>" />
             <label class="label label--input-error" for="email">
-                <?php if(isset($error["email"])): ?><?= $error["email"] ?><?php endif; ?>
+                <?php if(isset($error["email"])): ?>
+                <p class="error"><?= $error["email"] ?></p>
+                <?php endif; ?>
             </label>
         </div>
         <?php if(isset($error["global"])): ?>

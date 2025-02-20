@@ -1,0 +1,25 @@
+@use "../partials/functions" as f;
+@use "../partials/mixins" as m;
+
+@layer components {
+  .membertable {
+    width: 100%;
+    margin-bottom: f.rem(28);
+    @media (width >= f.screen(md)) {
+      min-width: f.rem(600);
+    }
+    &--head {
+      text-align: left;
+    }
+    &--row {
+      height: f.rem(48);
+      &-small {
+        height: f.rem(32);
+      }
+    }
+    &--cell {
+      @include m.flexbox($justify: start, $align: start, $gap: f.rem(8));
+      width: min-content;
+    }
+  }
+}

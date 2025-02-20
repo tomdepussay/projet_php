@@ -1,0 +1,12 @@
+@use "../../partials/functions" as f;
+@use "../../partials/mixins" as m;
+
+@layer pages {
+  .adduser {
+    margin: 0 auto;
+    max-width: f.rem(400);
+    @media (width >= f.screen(md)) {
+      margin: 0;
+    }
+  }
+}

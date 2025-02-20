@@ -31,7 +31,6 @@
   html,
   body {
     min-height: 100%;
-
   }
 
   body {
@@ -42,8 +41,10 @@
 
   .main--logged {
     padding: f.rem(8);
+    padding-bottom: f.rem(64);
     @media (width >= f.screen(md)) {
       padding: f.rem(16);
+      width: 100%;
       padding-left: f.rem(240) + f.rem(16);
     }
   }

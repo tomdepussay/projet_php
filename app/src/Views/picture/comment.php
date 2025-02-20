@@ -1,20 +1,16 @@
-<a href="/photos/<?= $picture->getUrl() ?>">Retour</a>
+<a class="back" href="/photos/<?= $picture->getUrl() ?>">Retour</a>
 
-<h2>Photo</h2>
-
-<h3>Ajouter un commentaire</h3>
-
-<?php include("img.php"); ?>
-
+<h1 class="title">Photo</h1>
+<h2 class="subtitle">Commenter la photo</h2>
 <form action="/photos/<?= $picture->getUrl() ?>/commenter" method="POST">
 
     <div>
-        <label for="comment">Commentaire :</label>
-        <textarea id="comment" name="comment" required><?= $comment ?? "" ?></textarea>
+        <!--  <textarea id="comment" name="comment" required><?= $comment ?? "" ?></textarea> -->
+        <textarea class="textarea" rows="5" cols="30" placeholder="Ecrivez votre commentaire" id="comment"
+            name="comment" resize="none" required><?= $comment ?? "" ?></textarea>
         <?php if(isset($error["comment"])): ?>
-            <p><?= $error["comment"] ?></p>
+        <p class="error"><?= $error["comment"] ?></p>
         <?php endif; ?>
     </div>
-
-    <input type="submit" value="Commenter" name="submit">
+    <input class="button button--primary" type="submit" value="Commenter" name="submit">
 </form>

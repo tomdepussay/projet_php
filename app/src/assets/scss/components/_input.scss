@@ -30,6 +30,7 @@
   }
   .input {
     @include m.resetInput;
+    flex-grow: 1;
     padding: f.rem(9) f.rem(14) f.rem(9) f.rem(14);
     background-color: var(--green-950);
     border: solid 0.1rem var(--teal-blue-500);

@@ -1,0 +1,8 @@
+@use "../../partials/functions" as f;
+@use "../../partials/mixins" as m;
+
+@layer pages {
+  .edit-photo {
+    @include m.flexbox($direction: column, $gap: f.rem(12));
+  }
+}

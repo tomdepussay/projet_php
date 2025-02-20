@@ -1,5 +1,5 @@
 <section class="register register--content">
-    <h2 class="title">Inscription</h2>
+    <h1 class="title mb-0">Inscription</h1>
     <p class="description">C'est le début de l'aventure</p>
     <form action="/inscription" method="POST" class="register register--form">
         <div class="input-label">
@@ -36,7 +36,7 @@
         <p><?= $error["global"] ?></p>
         <?php endif; ?>
 
-        <button type="submit" value="S'inscrire" name="submit" class="button button--primary">S'inscrire</button>
+        <button type="submit" value="S'inscrire" name="submit" class="button button--primary mt-5">S'inscrire</button>
     </form>
     <p class="signin">Déjà inscrit ? <a href="/connexion">Se connecter</a></p>
 </section>

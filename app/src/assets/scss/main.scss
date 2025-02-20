@@ -18,6 +18,12 @@ Components
 @use "components/headline";
 @use "components/subheadline";
 @use "components/navigation";
+@use "components/picturelist.scss";
+@use "components/buttonlist.scss";
+@use "components/membertable.scss";
+@use "components/back.scss";
+@use "components/picture.scss";
+@use "components/text.scss";
 /**
 Pages
 */
@@ -27,3 +33,9 @@ Pages
 @use "pages/login.scss";
 @use "pages/register.scss";
 @use "pages/forgot-password.scss";
+@use "pages/groups/groups.scss";
+@use "pages/groups/groups-show.scss";
+@use "pages/groups/edit.scss";
+@use "pages/pictures/picture-show.scss";
+@use "pages/pictures/picture-edit.scss";
+@use "pages/pictures/picture-create.scss";
