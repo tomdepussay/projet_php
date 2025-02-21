@@ -12,6 +12,8 @@ services:
       - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
       - "--certificatesresolvers.myresolver.acme.email=depussay.tom1@gmail.com"
       - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
     ports:
       - "80:80"
       - "443:443"
@@ -20,6 +22,7 @@ services:
       - "./letsencrypt:/letsencrypt"
     networks:
       - web
+
   web:
     build: ./php
     container_name: web
@@ -44,7 +47,6 @@ services:
     networks:
       - web
 
-
   mariadb:
     image: mariadb
     restart: always
@@ -60,7 +62,6 @@ services:
       - ./app/src/migrations:/docker-entrypoint-initdb.d
     networks:
       - web
-
 
   phpmyadmin:
     image: phpmyadmin

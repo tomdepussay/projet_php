@@ -18,7 +18,7 @@ Pour installer Zoomade en local, il vous faudra Docker.
 
 3. Avec docker compose, monter les containers :
 
-````bash
+```bash
 docker compose up -d
 ```
 
