@@ -43,8 +43,8 @@ services:
       - "traefik.http.routers.web.rule=Host(`zoomade.local`)"
       - "traefik.http.routers.web.entrypoints=web"
       - "traefik.http.routers.websecure.rule=Host(`zoomade.local`)"
-      - "traefik.http.routers.web.entrypoints=websecure"
-      - "traefik.http.routers.web.tls.certresolver=myresolver"
+      - "traefik.http.routers.websecure.entrypoints=websecure"
+      - "traefik.http.routers.websecure.tls.certresolver=myresolver"
     networks:
       - web
 
