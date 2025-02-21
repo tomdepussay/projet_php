@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= isset($title) ? $title . " - Template" : "Template" ?></title>
+    <title><?= isset($title) ? $title . " - Zoomade" : "Zoomade" ?></title>
     <link rel="stylesheet" href="./../../../public/css/main.css">
     <script src="./../../../public/js/app.js"></script>
-    <meta name="description" content="<?= isset($description) ? $description : "Template" ?>">
+    <meta name="description" content="<?= isset($description) ? $description : "Zoomade" ?>">
 </head>
 
 <body <?php if($auth->isLogged()): ?> class="logged" <?php endif; ?> <header>
